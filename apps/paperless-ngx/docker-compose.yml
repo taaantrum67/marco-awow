@@ -33,12 +33,12 @@ services:
     image: docker.io/library/redis:8
     restart: unless-stopped
     volumes:
-      - ./paperless-data/redisdata:/data
+      - /appdata/docker/paperless-ngx/paperless-data/redisdata:/data
   db:
     image: docker.io/library/postgres:17
     restart: unless-stopped
     volumes:
-      - ./paperless-data/pgdata:/var/lib/postgresql/data
+      - /appdata/docker/paperless-ngx/paperless-data/pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: paperless
       POSTGRES_USER: paperless
@@ -54,10 +54,10 @@ services:
     ports:
       - "8080:8000"
     volumes:
-      - ./paperless-data/data:/usr/src/paperless/data
-      - ./paperless-data/media:/usr/src/paperless/media
-      - ./paperless-data/export:/usr/src/paperless/export
-      - ./paperless-data/consume:/usr/src/paperless/consume
+      - /appdata/docker/paperless-ngx/paperless-data/data:/usr/src/paperless/data
+      - /appdata/docker/paperless-ngx/paperless-data/media:/usr/src/paperless/media
+      - /appdata/docker/paperless-ngx/paperless-data/export:/usr/src/paperless/export
+      - /appdata/docker/paperless-ngx/paperless-data/consume:/usr/src/paperless/consume
     env_file: docker-compose.env
     environment:
       PAPERLESS_CONSUMER_POLLING: "30"
@@ -100,5 +100,5 @@ services:
     ports:
       - "3000:3000"
     volumes:
-    - ./paperless-ai_data:/app/data
+    - /appdata/docker/paperless-ai/paperless-ai_data:/app/data
 
