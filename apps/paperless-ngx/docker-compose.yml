@@ -98,6 +98,6 @@ services:
       - PAPERLESS_API_URL=http://192.168.0.20:8080/api
       - PAPERLESS_API_TOKEN=$PAPERLESS_API_TOKEN
     ports:
-      - "3000:3000"
+      - $THE_PAPERLESS_AI_PORT:3000
     volumes:
-    - $PAPERLESS-AI_DATA:/app/data
+    - $PAPERLESS_AI_DATA:/app/data
