@@ -52,13 +52,13 @@ services:
       - gotenberg
       - tika
     ports:
-      - $WEBSERVER_PORT:8000
+      - "$WEBSERVER_PORT:8000"
     volumes:
       - $WEBSERVER_DATA:/usr/src/paperless/data
       - $WEBSERVER_MEDIA:/usr/src/paperless/media
       - $WEBSERVER_EXPORT:/usr/src/paperless/export
       - $WEBSERVER_CONSUME:/usr/src/paperless/consume
-    env_file: docker-compose.env
+    env_file: /appdata/docker/paperless-ngx/docker-compose.env
     environment:
       PAPERLESS_CONSUMER_POLLING: "30"
       PAPERLESS_CONSUMER_POLLING_RETRY_COUNT: "5"
