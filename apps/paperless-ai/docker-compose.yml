@@ -17,3 +17,4 @@ paperless-ai:
       - $EXTERNAL_PAPERLESS_AI_PORT:3000
     volumes:
     - $PAPERLESS_AI_DATA:/app/data
+    #test
