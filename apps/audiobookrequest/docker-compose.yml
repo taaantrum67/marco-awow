@@ -11,6 +11,9 @@ services:
       - ABR_APP__INIT_ROOT_PASSWORD=$ABR_APP__INIT_ROOT_PASSWORD
       # Optional: set base URL if behind a subpath
       # - ABR_APP__BASE_URL=/abr/
+      - PUID=$PUID 
+      - PGID=$PGID   
+      - UMASK=$UMASK
     volumes:
       - $BIND_MOUNT_CONFIG:/config
     restart: unless-stopped
