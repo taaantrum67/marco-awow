@@ -5,10 +5,10 @@ services:
     ports:
       - $PROWLARR_EXTERN_PORT:9696
     environment:
-      - PUID=$PUID
-      - PGID=$PGID
-      - UMASK=$UMASK
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - UMASK=${UMASK}
       - TZ=Europe/Berlin
     volumes:
-      - $BIND_MOUNT_CONFIG:/config
+      - ${BIND_MOUNT_CONFIG}:/config
     restart: unless-stopped
