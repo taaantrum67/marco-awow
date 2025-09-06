@@ -5,8 +5,8 @@ services:
     ports:
       - $PROWLARR_EXTERN_PORT:9696
     environment:
-      - PUID=$PUID                 # deine UID
-      - PGID=$PGID                 # GID deiner "media"-Gruppe (anpassen)
+      - PUID=$PUID
+      - PGID=$PGID
       - UMASK=$UMASK
       - TZ=Europe/Berlin
     volumes:
