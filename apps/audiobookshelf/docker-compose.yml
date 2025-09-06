@@ -7,10 +7,10 @@ services:
       - AUDIOBOOKSHELF_UID=${AUDIOBOOKSHELF_UID}
       - AUDIOBOOKSHELF_GID=${AUDIOBOOKSHELF_GID}
     ports:
-      - "${A}UDIOBOOKSHELF_HOST_PORT}:80"
+      - "${AUDIOBOOKSHELF_HOST_PORT}:80"
     volumes:
       - ${AUDIOBOOKSHELF_AUDIOBOOKFOLDER}:/audiobooks
-      - ${A}UDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
+      - ${AUDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
     restart: unless-stopped
