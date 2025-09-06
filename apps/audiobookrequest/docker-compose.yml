@@ -1,0 +1,16 @@
+services:
+  audiobookrequest:
+    image: markbeep/audiobookrequest:1
+    container_name: audiobookrequest
+    ports:
+      - "13379:8000"        # change host port if needed
+    environment:
+      - ABR_APP__PORT=8000
+      # Optional: seed the first admin
+      # - ABR_APP__INIT_ROOT_USERNAME=admin
+      # - ABR_APP__INIT_ROOT_PASSWORD=choose-a-strong-password
+      # Optional: set base URL if behind a subpath
+      # - ABR_APP__BASE_URL=/abr/
+    volumes:
+      - /appdata/docker/audiobookrequest/config:/config
+    restart: unless-stopped
