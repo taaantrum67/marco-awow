@@ -2,8 +2,10 @@ version: "3.9"
 
 services:
   gluetun:
-    image: qmcgaw/gluetun
+    image: qmcgaw/gluetun:v3.39.0 # Pinned to this version to avoid issues in v3.40+ specific to protonvpn
     container_name: gluetun
+    stdin_open: true
+    tty: true
     cap_add:
       - NET_ADMIN
     devices:
@@ -24,7 +26,7 @@ services:
       # --- VPN PROVIDER SELECTION ---
       VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
       VPN_TYPE: ${VPN_TYPE}
-      VPN_PORT_FORWARDING: "off"
+      VPN_PORT_FORWARDING: true
       VPN_PORT_FORWARDING_PROVIDER: ${VPN_SERVICE_PROVIDER}
       VPN_PORT_FORWARDING_LISTENING_PORT: ${QBIT_TORRENT_PORT}
       VPN_PORT_FORWARDING_STATUS_FILE: /gluetun/forwarded_port
@@ -35,16 +37,16 @@ services:
 
       # --- LOCATION FILTERS (optional) ---
       SERVER_COUNTRIES: ${SERVER_COUNTRIES}       # e.g. CH,NL,DE            # optional, comma-separated
-      PORT_FORWARD_ONLY: "on"
+      PORT_FORWARD_ONLY: true
       
       # --- HEALTHCHECK TUNING (optional) ---
       HEALTH_VPN_DURATION_INITIAL: ${HEALTH_VPN_DURATION_INITIAL:-120s}
-    healthcheck:
-      test: ["CMD", "ping", "-c", "1", "1.1.1.1"]
-      interval: 20s
-      timeout: 10s
-      retries: 5
-    restart: unless-stopped
+    # healthcheck:
+    #  test: ["CMD", "ping", "-c", "1", "1.1.1.1"]
+    #  interval: 20s
+    #  timeout: 10s
+    #  retries: 5
+    restart: always
 
 
   qbittorrent:
