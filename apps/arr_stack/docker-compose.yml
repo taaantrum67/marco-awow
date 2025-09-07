@@ -4,7 +4,7 @@ networks:
     ipam:
       config:
         - subnet: 172.39.0.0/24
-        
+
 services:
   # airvpn recommended (referral url: https://airvpn.org/?referred_by=673908)
   gluetun:
@@ -75,9 +75,3 @@ services:
     volumes:
       - ${BIND_MOUNT_CONFIG}:/config
     restart: unless-stopped
-networks:
-  servarrnetwork:
-    name: servarrnetwork
-    ipam:
-      config:
-        - subnet: 172.39.0.0/24
