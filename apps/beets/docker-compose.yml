@@ -8,6 +8,9 @@ services:
       - PUID=1000
       - PGID=1002
       - TZ=Etc/UTC
+      # Alternative: install plugins via LSIO Mods (skip step 3 if you use this)
+      # - DOCKER_MODS=linuxserver/mods:universal-package-install
+      # - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3
     volumes:
       - /appdata/docker/beets/config:/config
       - /appdata/docker/beets/scripts:/custom-cont-init.d
