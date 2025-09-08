@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  beets:
+    image: lscr.io/linuxserver/beets:latest
+    container_name: beets
+    environment:
+      - PUID=1000
+      - PGID=1002
+      - TZ=Etc/UTC
+    volumes:
+      - /appdata/docker/beets/config:/config
+      - /appdata/docker/beets/scripts:/custom-cont-init.d
+      - /appdata/docker/beets/services:/custom-services.d
+      - /mnt/audiobookshelf/data/audiobooks:/audiobooks
+      - /mnt/audiobookshelf/data/downloads:/input
+    restart: unless-stopped
