@@ -23,8 +23,10 @@ services:
     image: seanap/auto-m4b
     container_name: auto-m4b
     volumes:
-      - /appdata/docker/auto-m4b:/config
-      - /mnt/audiobookshelf/data/auto-m4b:/temp
+      - /mnt/audiobookshelf/data/downloads:/temp/recentlyadded
+      - /mnt/audiobookshelf/data/audiobooks/untagged:/temp/untagged
+      - /mnt/audiobookshelf/data/audiobooks/backup:/temp/backup
+      - /mnt/audiobookshelf/data/audiobooks/delete:/temp/delete
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -32,3 +34,4 @@ services:
       - SLEEPTIME=1m
       - MAKE_BACKUP=Y
     restart: unless-stopped
+
