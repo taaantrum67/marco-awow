@@ -19,7 +19,7 @@ services:
       - /mnt/audiobookshelf/data/downloads:/input
     restart: unless-stopped
 
-m4btool:
+  m4btool:
     image: lukechidls/m4b-tool
     container_name: m4btool
     volumes:
