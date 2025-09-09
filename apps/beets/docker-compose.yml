@@ -18,3 +18,14 @@ services:
       - /mnt/audiobookshelf/data/audiobooks:/audiobooks
       - /mnt/audiobookshelf/data/downloads:/input
     restart: unless-stopped
+
+m4btool:
+    image: lukechidls/m4b-tool
+    container_name: m4btool
+    volumes:
+      - /mnt/audiobookshelf/data/downloads:/downloads
+      - /mnt/audiobookshelf/data/audiobooks:/audiobooks
+      - /appdata/docker/beets/scripts:/scripts
+    entrypoint: ["/bin/sh"]
+    tty: true
+    restart: unless-stopped
