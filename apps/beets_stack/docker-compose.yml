@@ -19,13 +19,15 @@ services:
       - /mnt/audiobookshelf/data/downloads:/input
     restart: unless-stopped
 
-  m4btool:
-    image: lukechidls/m4b-tool
-    container_name: m4btool
+  auto-m4b:
+    image: seanap/auto-m4b
+    container_name: auto-m4b
     volumes:
-      - /mnt/audiobookshelf/data/downloads:/downloads
-      - /mnt/audiobookshelf/data/audiobooks:/audiobooks
-      - /appdata/docker/beets/scripts:/scripts
-    entrypoint: ["/bin/sh"]
-    tty: true
-    restart: unless-stopped
+      - /path/to/config:/config
+      - /path/to/temp:/temp
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - CPU_CORES=2
+      - SLEEPTIME=1m
+      - MAKE_BACKUP=Y
