@@ -24,9 +24,9 @@ services:
     container_name: auto-m4b
     volumes:
       - /mnt/audiobookshelf/data/downloads:/temp/recentlyadded
-      - /mnt/audiobookshelf/data/audiobooks/untagged:/temp/untagged
-      - /mnt/audiobookshelf/data/audiobooks/backup:/temp/backup
-      - /mnt/audiobookshelf/data/audiobooks/delete:/temp/delete
+      - /mnt/audiobookshelf/data/auto-m4b/untagged:/temp/untagged
+      - /mnt/audiobookshelf/data/auto-m4b/backup:/temp/backup
+      - /mnt/audiobookshelf/data/auto-m4b/delete:/temp/delete
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -34,4 +34,5 @@ services:
       - SLEEPTIME=1m
       - MAKE_BACKUP=Y
     restart: unless-stopped
+
 
