@@ -100,3 +100,17 @@ services:
         condition: service_healthy
     network_mode: "service:gluetun"   # <— routes all traffic via VPN
     restart: unless-stopped
+    
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=info
+      - TZ=${TZ}
+    ports:
+      - "8191:8191"   # FlareSolverr API
+    restart: unless-stopped
+    network_mode: "service:gluetun"   # so it also routes through VPN
+    depends_on:
+      gluetun:
+        condition: service_healthy
