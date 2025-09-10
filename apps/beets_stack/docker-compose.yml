@@ -5,8 +5,8 @@ services:
     image: lscr.io/linuxserver/beets:latest
     container_name: beets
     environment:
-      - PUID=1000
-      - PGID=1002
+      - PUID=${PUID}
+      - PGID=${PGID}
       - TZ=Etc/UTC
       # Alternative: install plugins via LSIO Mods (skip step 3 if you use this)
       # - DOCKER_MODS=linuxserver/mods:universal-package-install
@@ -16,7 +16,7 @@ services:
       - /appdata/docker/beets/scripts:/custom-cont-init.d
       - /appdata/docker/beets/services:/custom-services.d
       - /mnt/audiobookshelf/data/audiobooks:/audiobooks
-      - /mnt/audiobookshelf/data/downloads:/input
+      - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
 
   auto-m4b:
@@ -30,7 +30,7 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-      - CPU_CORES=2
+      - CPU_CORES=4
       - SLEEPTIME=1m
       - MAKE_BACKUP=Y
     restart: unless-stopped
