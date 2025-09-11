@@ -39,7 +39,7 @@ services:
 
       # --- LOCATION FILTERS (optional) ---
       SERVER_COUNTRIES: ${SERVER_COUNTRIES}       # e.g. CH,NL,DE            # optional, comma-separated
-      # PORT_FORWARD_ONLY: true
+      PORT_FORWARD_ONLY: true
       
       # --- HEALTHCHECK TUNING (optional) ---
       HEALTH_VPN_DURATION_INITIAL: ${HEALTH_VPN_DURATION_INITIAL:-120s}
@@ -63,6 +63,7 @@ services:
     volumes:
       - ${QBIT_CONFIG_DIR}:/config
       - ${QBIT_DOWNLOADS_DIR}:/downloads
+      - ${QBIT_FINISHED_DOWNLOADS_DIR}:/finished
     depends_on:
       gluetun:
         condition: service_healthy
