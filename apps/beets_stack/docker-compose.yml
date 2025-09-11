@@ -8,6 +8,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=Etc/UTC
+      - UMASK=002      
       # Alternative: install plugins via LSIO Mods (skip step 3 if you use this)
       # - DOCKER_MODS=linuxserver/mods:universal-package-install
       # - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3
@@ -35,6 +36,7 @@ services:
       - CPU_CORES=4
       - SLEEPTIME=1m
       - MAKE_BACKUP=Y
+      - UMASK=002
     restart: unless-stopped
 
 
