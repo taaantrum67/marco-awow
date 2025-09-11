@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   beets:
-    image: lscr.io/linuxserver/beets:latest
+    image: lscr.io/linuxserver/beets:2.0.0
     container_name: beets
     environment:
       - PUID=${PUID}
