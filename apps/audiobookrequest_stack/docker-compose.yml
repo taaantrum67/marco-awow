@@ -64,6 +64,7 @@ services:
       - ${QBIT_CONFIG_DIR}:/config
       - ${QBIT_DOWNLOADS_DIR}:/downloads
       - ${QBIT_FINISHED_DOWNLOADS_DIR}:/finished
+      
     depends_on:
       gluetun:
         condition: service_healthy

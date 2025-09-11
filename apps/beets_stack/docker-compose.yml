@@ -23,7 +23,7 @@ services:
     image: seanap/auto-m4b
     container_name: auto-m4b
     volumes:
-      - /mnt/audiobookshelf/data/downloads:/temp/recentlyadded
+      - /mnt/audiobookshelf/data/auto-m4b/recentlyadded:/temp/recentlyadded
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/temp/untagged
       - /mnt/audiobookshelf/data/auto-m4b/backup:/temp/backup
       - /mnt/audiobookshelf/data/auto-m4b/delete:/temp/delete
