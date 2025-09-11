@@ -27,6 +27,8 @@ services:
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/temp/untagged
       - /mnt/audiobookshelf/data/auto-m4b/backup:/temp/backup
       - /mnt/audiobookshelf/data/auto-m4b/delete:/temp/delete
+      - /mnt/audiobookshelf/data/auto-m4b/merge:/temp/merge
+      - /mnt/audiobookshelf/data/auto-m4b/fix:/temp/fix
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
