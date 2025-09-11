@@ -39,7 +39,7 @@ services:
 
       # --- LOCATION FILTERS (optional) ---
       SERVER_COUNTRIES: ${SERVER_COUNTRIES}       # e.g. CH,NL,DE            # optional, comma-separated
-      PORT_FORWARD_ONLY: true
+      # PORT_FORWARD_ONLY: true
       
       # --- HEALTHCHECK TUNING (optional) ---
       HEALTH_VPN_DURATION_INITIAL: ${HEALTH_VPN_DURATION_INITIAL:-120s}
