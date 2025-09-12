@@ -87,7 +87,7 @@ services:
     image: docker.io/apache/tika:latest
     restart: unless-stopped
 
-paperless-ai:
+  paperless-ai:
       image: clusterzx/paperless-ai
       container_name: paperless-ai
       network_mode: bridge
