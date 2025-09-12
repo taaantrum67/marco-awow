@@ -1,0 +1,109 @@
+# Docker Compose file for running paperless from the docker container registry.
+# This file contains everything paperless needs to run.
+# Paperless supports amd64, arm and arm64 hardware.
+#
+# All compose files of paperless configure paperless in the following way:
+#
+# - Paperless is (re)started on system boot, if it was running before shutdown.
+# - Docker volumes for storing data are managed by Docker.
+# - Folders for importing and exporting files are created in the same directory
+#   as this file and mounted to the correct folders inside the container.
+# - Paperless listens on port 8000.
+#
+# In addition to that, this Docker Compose file adds the following optional
+# configurations:
+#
+# - Instead of SQLite (default), PostgreSQL is used as the database server.
+# - Apache Tika and Gotenberg servers are started with paperless and paperless
+#   is configured to use these services. These provide support for consuming
+#   Office documents (Word, Excel, PowerPoint and their LibreOffice counter-
+#   parts).
+#
+# To install and update paperless with this file, do the following:
+#
+# - Copy this file as 'docker-compose.yml' and the files 'docker-compose.env'
+#   and '.env' into a folder.
+# - Run 'docker compose pull'.
+# - Run 'docker compose up -d'.
+#
+# For more extensive installation and update instructions, refer to the
+# documentation.
+services:
+  broker:
+    image: docker.io/library/redis:8
+    restart: unless-stopped
+    volumes:
+      - $BROKER_DATA_REDIS:/data
+  db:
+    image: docker.io/library/postgres:17
+    restart: unless-stopped
+    volumes:
+      - $DB_DATA_PGDATA:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: paperless
+      POSTGRES_USER: paperless
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  webserver:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    depends_on:
+      - db
+      - broker
+      - gotenberg
+      - tika
+    ports:
+      - "$WEBSERVER_PORT:8000"
+    volumes:
+      - $WEBSERVER_DATA:/usr/src/paperless/data
+      - $WEBSERVER_MEDIA:/usr/src/paperless/media
+      - $WEBSERVER_EXPORT:/usr/src/paperless/export
+      - $WEBSERVER_CONSUME:/usr/src/paperless/consume
+    env_file: docker-compose.env
+    environment:
+      PAPERLESS_CONSUMER_POLLING: "30"
+      PAPERLESS_CONSUMER_POLLING_RETRY_COUNT: "5"
+      PAPERLESS_CONSUMER_POLLING_DELAY: "5"
+      PAPERLESS_CONSUMER_INOTIFY_DELAY: "5"
+      PAPERLESS_REDIS: "redis://broker:6379"
+      PAPERLESS_DBHOST: "db"
+      PAPERLESS_TIKA_ENABLED: "1"
+      PAPERLESS_TIKA_GOTENBERG_ENDPOINT: "http://gotenberg:3000"
+      PAPERLESS_TIKA_ENDPOINT: "http://tika:9998"
+      PAPERLESS_URL: ${PAPERLESS_URL}
+      PAPERLESS_SECRET_KEY: ${PAPERLESS_SECRET_KEY}
+      PAPERLESS_CSRF_TRUSTED_ORIGINS: ${PAPERLESS_CSRF_TRUSTED_ORIGINS}
+      PAPERLESS_ALLOWED_HOSTS: ${PAPERLESS_ALLOWED_HOSTS}
+      PAPERLESS_CORS_ALLOWED_HOSTS: ${PAPERLESS_CORS_ALLOWED_HOSTS}
+  gotenberg:
+    image: docker.io/gotenberg/gotenberg:8.20
+    restart: unless-stopped
+    # The gotenberg chromium route is used to convert .eml files. We do not
+    # want to allow external content like tracking pixels or even javascript.
+    command:
+      - "gotenberg"
+      - "--chromium-disable-javascript=true"
+      - "--chromium-allow-list=file:///tmp/.*"
+  tika:
+    image: docker.io/apache/tika:latest
+    restart: unless-stopped
+
+paperless-ai:
+      image: clusterzx/paperless-ai
+      container_name: paperless-ai
+      network_mode: bridge
+      restart: unless-stopped
+      cap_drop:
+        - ALL
+      security_opt:
+        - no-new-privileges:true
+      environment:
+        - PAPERLESS_AI_PORT=${PAPERLESS_AI_PORT:-3000}
+        - RAG_SERVICE_URL=http://192.168.0.20:8080
+        - RAG_SERVICE_ENABLED=true
+        - PAPERLESS_API_URL=http://192.168.0.20:8080/api
+        - PAPERLESS_API_TOKEN=$PAPERLESS_API_TOKEN
+      ports:
+        - $EXTERNAL_PAPERLESS_AI_PORT:3000
+      volumes:
+      - $PAPERLESS_AI_DATA:/app/data
+      #test
