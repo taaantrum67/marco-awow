@@ -19,7 +19,6 @@ services:
     restart: unless-stopped
     ports:
       - "5000:5000"   # Webpanel-Port
-      - "8337:8337"   
 
   auto-m4b:
     image: seanap/auto-m4b
