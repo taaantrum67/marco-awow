@@ -10,12 +10,14 @@ services:
       - TZ=Etc/UTC
       - UMASK=002      
       - DOCKER_MODS=linuxserver/mods:universal-package-install
-      - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3
+      - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3 flask flask-socketio eventlet
     volumes:
       - /appdata/docker/beets/config:/config
       - /mnt/audiobookshelf/data/audiobooks:/audiobooks
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
+    ports:
+      - "5000:5000"   # Webpanel-Port
 
   auto-m4b:
     image: seanap/auto-m4b
