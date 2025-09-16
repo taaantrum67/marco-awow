@@ -13,6 +13,7 @@ services:
       - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3 flask flask-socketio eventlet
     volumes:
       - /appdata/docker/beets/config:/config
+      - /appdata/docker/beets/custom-cont-init.d:/custom-cont-init.d:ro
       - /mnt/audiobookshelf/data/audiobooks:/audiobooks
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
