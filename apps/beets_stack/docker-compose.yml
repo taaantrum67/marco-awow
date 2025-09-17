@@ -18,21 +18,6 @@ services:
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
 
-  beets-flask:
-    image: pspitzner/beets-flask:stable
-    container_name: beets-flask
-    restart: unless-stopped
-    ports:
-      - "5001:5001"
-    environment:
-      - TZ=Europe/Berlin
-      - USER_ID=${PUID}
-      - GROUP_ID=${PGID}
-    volumes:
-      - /appdata/docker/beets/config:/config
-      - /mnt/audiobookshelf/data/auto-m4b/untagged:/music_path/inbox
-      - /mnt/audiobookshelf/data/audiobooks:/music_path/clean
-
   auto-m4b:
     image: seanap/auto-m4b
     container_name: auto-m4b
