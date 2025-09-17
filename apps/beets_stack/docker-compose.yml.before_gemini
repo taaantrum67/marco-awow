@@ -10,17 +10,15 @@ services:
       - TZ=Europe/Berlin
       - UMASK=002      
       - DOCKER_MODS=linuxserver/mods:universal-package-install
-      - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3 flask
+      - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3 flask flask-socketio eventlet
     volumes:
       - /appdata/docker/beets/config:/config
-      # Dein custom-cont-init.d Volume ist hier nicht mehr nötig, wenn du es nur für das Skript hattest
+      - /appdata/docker/beets/custom-cont-init.d:/custom-cont-init.d:ro
       - /mnt/audiobookshelf/data/audiobooks:/audiobooks
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
     ports:
       - 5002:5002
-    # Diese Zeile ist neu. Sie startet das Web-Interface.
-    command: ["python3", "/config/webimport.py"]
 
   auto-m4b:
     image: seanap/auto-m4b
@@ -40,3 +38,5 @@ services:
       - MAKE_BACKUP=Y
       - UMASK=002
     restart: unless-stopped
+
+
