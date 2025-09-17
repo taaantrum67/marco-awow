@@ -17,6 +17,8 @@ services:
       - /mnt/audiobookshelf/data/audiobooks:/audiobooks
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
+    ports:
+      - 5002:5002
 
   auto-m4b:
     image: seanap/auto-m4b
