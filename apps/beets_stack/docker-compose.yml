@@ -18,6 +18,7 @@ services:
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
     ports:
+      - "8338:8338" # Beets Web-Import
       - "5000:5000"   # Webpanel-Port
 
   auto-m4b:
