@@ -18,7 +18,7 @@ services:
       - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
     restart: unless-stopped
     ports:
-      - "5000:5000"   # Webpanel-Port
+      - "5001:5001"   # Webpanel-Port
 
   auto-m4b:
     image: seanap/auto-m4b
