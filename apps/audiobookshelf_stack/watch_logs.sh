@@ -2,27 +2,28 @@
 
 # Define the Discord webhook URL
 WEBHOOK_URL=${DISCORD_WEBHOOK}
-# Function to send message to Discord
+# Function to send a message to Discord
 send_discord_notification() {
-  local message=$1
+  local message="$1"
   curl -H "Content-Type: application/json" \
        -X POST \
        -d "{\"content\": \"$message\"}" \
        $WEBHOOK_URL
 }
 
-# Monitor Docker logs for new book imports
-docker logs -f audiobookshelf | while read -r line; do
-  # Check for log entries indicating a new book import
-  if [[ "$line" =~ "imported new book" ]]; then
-    # Extract book title and author from the log line
-    book_title=$(echo "$line" | grep -oP '(?<=title":")[^"]+')
-    book_author=$(echo "$line" | grep -oP '(?<=author":")[^"]+')
-
-    # Create the message
-    message="📘 New audiobook imported: **$book_title** by $book_author"
-
-    # Send the notification
-    send_discord_notification "$message"
+# Monitor Audiobookshelf Docker logs continuously
+docker logs -f audiobookshelf-server 2>&1 | while read -r line; do
+  # Detect new library items
+  if [[ "$line" =~ "Folder scan results" ]] || [[ "$line" =~ "Created new library item" ]]; then
+    # Extract the book title from the log line
+    if [[ "$line" =~ \"([^\"]+)\" ]]; then
+      book="${BASH_REMATCH[1]}"
+      # Optionally, split into author and title
+      author=$(echo "$book" | cut -d'/' -f1)
+      title=$(echo "$book" | cut -d'/' -f2-)
+      
+      # Send notification
+      send_discord_notification "📘 New audiobook imported: **$title** by $author"
+    fi
   fi
 done
