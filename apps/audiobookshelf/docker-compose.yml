@@ -14,3 +14,11 @@ services:
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
     restart: unless-stopped
+
+  apprise:
+    image: caronc/apprise:latest
+    container_name: apprise
+    command: apprise-api
+    ports:
+      - "8888:8000"
+    restart: unless-stopped
