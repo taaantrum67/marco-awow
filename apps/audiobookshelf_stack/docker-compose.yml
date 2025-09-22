@@ -21,12 +21,3 @@ services:
     ports:
       - "8888:8000"
     restart: unless-stopped
-
-  audiobook-notifier:
-    image: bash:latest
-    container_name: audiobook-notifier
-    volumes:
-      - /appdata/docker/audiobookshelf/watch_logs.sh:/watch_logs.sh
-      - /var/run/docker.sock:/var/run/docker.sock   # required for docker logs monitoring
-    command: ["bash", "/watch_logs.sh"]
-    restart: unless-stopped
