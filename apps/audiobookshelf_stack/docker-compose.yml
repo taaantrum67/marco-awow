@@ -13,6 +13,8 @@ services:
       - ${AUDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
+      - /appdata/docker/audiobookshelf/metadata:/metadata
+
     restart: unless-stopped
 
   apprise:
