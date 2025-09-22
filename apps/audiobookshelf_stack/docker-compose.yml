@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
 
   apprise:
-    image: caronc/apprise:latest
+    image: caronc/apprise-api:latest
     container_name: apprise
     command: apprise-api
     ports:
