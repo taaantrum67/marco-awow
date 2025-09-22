@@ -26,7 +26,7 @@ services:
     image: bash:latest
     container_name: audiobook-notifier
     volumes:
-      - ./watch_logs.sh:/watch_logs.sh   # script in the same GitHub repo
+      - /appdata/docker/audiobookshelf/watch_logs.sh:/watch_logs.sh
       - /var/run/docker.sock:/var/run/docker.sock   # required for docker logs monitoring
     command: ["bash", "/watch_logs.sh"]
     restart: unless-stopped
