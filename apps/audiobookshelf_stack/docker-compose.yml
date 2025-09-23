@@ -27,5 +27,5 @@ services:
     container_name: log-watcher
     volumes:
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
-      - ${AUDIOBOOKSHELF_CONFIGFOLDER}/webhook_script:/config
+      - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
     restart: unless-stopped
