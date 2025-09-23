@@ -39,7 +39,7 @@ tail -F "$LOG_DIR"/*.txt | while read -r line; do
         # Skip if already processed
         if ! grep -q "$id_hash" "$SEEN_FILE"; then
             # Extract the book name between the quotes
-            book=$(echo "$line" | sed -E 's/.*Created new library item "(.*)".*/\1/')
+            book=$(echo "$line" | grep -oP 'Created new library item "\K[^"]+')
             
             if [[ -n "$book" ]]; then
                 echo "$(date '+%Y-%m-%d %H:%M:%S') - Trigger detected: $book"
