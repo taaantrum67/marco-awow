@@ -13,6 +13,7 @@ services:
       - ${AUDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
+    command: ["/bin/bash", "/config/watch_logs.sh"]
 
     restart: unless-stopped
 
