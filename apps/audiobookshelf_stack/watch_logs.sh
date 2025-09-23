@@ -43,18 +43,23 @@ send_discord_notification() {
 process_line() {
   local line="$1"
 
-  # Nur Zeilen mit dem Ereignis betrachten
-  [[ "$line" != *"Created new library item"* ]] && return 0
+  # message-Feld extrahieren
+  local msg
+  msg=$(printf '%s' "$line" | jq -r '.message' 2>/dev/null || true)
+  [[ -z "$msg" ]] && return 0
+
+  # Nur reagieren wenn "Created new library item"
+  [[ "$msg" != *"Created new library item"* ]] && return 0
 
   # Titel aus [Scan] "…"
   local book=""
-  if [[ $line =~ \[Scan\]\ \"([^\"]+)\" ]]; then
+  if [[ $msg =~ \[Scan\]\ \"([^\"]+)\" ]]; then
     book="${BASH_REMATCH[1]}"
   else
     return 0
   fi
 
-  # Dedupe per Hash der Ereigniszeile
+  # Dedupe wie gehabt
   local id_hash
   id_hash="$(printf '%s' "$line" | md5sum | awk '{print $1}')"
   if grep -q "$id_hash" "$SEEN_FILE"; then
@@ -68,6 +73,7 @@ process_line() {
   echo "$id_hash" >> "$SEEN_FILE"
   echo "$ts - Notification sent for: $book" | tee -a "$TRIGGER_LOG" >/dev/null
 }
+
 
 # ----------------------------
 # Log-Follow (robust bei Rotation und Start ohne Dateien)
