@@ -1,6 +1,6 @@
 FROM alpine:latest
 
-RUN apk add --no-cache bash curl coreutils tzdata ca-certificates \
+RUN apk add --no-cache bash curl coreutils tzdata ca-certificates jq \
  && update-ca-certificates
 
 WORKDIR /app
