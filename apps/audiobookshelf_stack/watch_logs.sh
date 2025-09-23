@@ -4,11 +4,13 @@ WEBHOOK_URL="https://discord.com/api/webhooks/1419786483677790359/-vGb-7sM1exHJn
 
 send_discord_notification() {
     local message="$1"
+    esc_message=$(printf '%s' "$message" | jq -R .)
     curl -s -H "Content-Type: application/json" \
          -X POST \
-         -d "{\"content\": \"$message\"}" \
+         -d "{\"content\": $esc_message}" \
          "$WEBHOOK_URL"
 }
+
 
 LOG_DIR="/metadata/logs/daily"
 SEEN_FILE="/config/webhook_script/.seen_books"
@@ -31,7 +33,7 @@ tail -F "$LOG_DIR"/*.txt | while read -r line; do
             if [[ -n "$book" ]]; then
                 echo "$(date '+%Y-%m-%d %H:%M:%S') - Trigger detected: $book"
                 echo "$(date '+%Y-%m-%d %H:%M:%S') $book" >> "$TRIGGER_LOG"
-                send_discord_notification "📘 New audiobook imported:$book"
+                send_discord_notification "📘 New audiobook imported: $book"
                 echo "$id_hash" >> "$SEEN_FILE"
                 echo "$(date '+%Y-%m-%d %H:%M:%S') - Notification sent for: $book"
             fi
