@@ -82,18 +82,17 @@ echo "Starting audiobook log watcher..."
 echo "Watching logs in $LOG_DIR"
 
 while true; do
-  files=( "$LOG_DIR"/*.txt )
-  if (( ${#files[@]} == 0 )); then
+  current=$(ls -1t "$LOG_DIR"/*.txt 2>/dev/null | head -n1)
+  if [[ -z "$current" ]]; then
     sleep 2
     continue
   fi
 
-  # -F folgt Rotationen/Neuanlagen; stdbuf = zeilenpuffer
-  stdbuf -oL -eL tail -n0 -F "${files[@]}" 2>/dev/null | \
+  echo "Following $current"
+  stdbuf -oL -eL tail -n0 -F "$current" 2>/dev/null | \
   while IFS= read -r line; do
     process_line "$line"
   done
 
-  # falls tail beendet wurde (z.B. kurzzeitig keine Dateien), neu versuchen
   sleep 1
 done
