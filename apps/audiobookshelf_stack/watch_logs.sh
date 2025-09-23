@@ -79,7 +79,7 @@ process_line() {
     fi
 
     # Discord senden
-    send_discord_notification "📘 New audiobook imported: $book"
+    send_discord_notification "📗 New audiobook imported: $book"
   fi
 }
 
