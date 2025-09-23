@@ -4,13 +4,11 @@ WEBHOOK_URL="https://discord.com/api/webhooks/1419786483677790359/-vGb-7sM1exHJn
 
 send_discord_notification() {
     local message="$1"
-    esc_message=$(printf '%s' "$message" | jq -R .)
     curl -s -H "Content-Type: application/json" \
          -X POST \
-         -d "{\"content\": $esc_message}" \
-         "$WEBHOOK_URL"
+         -d "{\"content\": \"${message//\"/\\\"}\"}" \
+         "$WEBHOOK_URL" >/dev/null
 }
-
 
 LOG_DIR="/metadata/logs/daily"
 SEEN_FILE="/config/webhook_script/.seen_books"
@@ -23,20 +21,25 @@ echo "Starting audiobook log watcher..."
 echo "Watching logs in $LOG_DIR"
 
 tail -F "$LOG_DIR"/*.txt | while read -r line; do
-    if [[ "$line" =~ Created\ new\ library\ item ]]; then
-        id_hash=$(echo -n "$line" | md5sum | cut -d' ' -f1)
+    # Nur reagieren, wenn die Zeile das Ereignis enthält
+    [[ "$line" != *"Created new library item"* ]] && continue
 
-        if ! grep -q "$id_hash" "$SEEN_FILE"; then
-            # Extrahiere NUR den ersten Titel im Log
-            book=$(echo "$line" | sed -E 's/.*\[Scan\] "([^"]+)".*/\1/')
+    # Titel robust via Bash-Regex aus [Scan] "…"
+    book=""
+    if [[ "$line" =~ \[Scan\]\ \"([^\"]+)\" ]]; then
+        book="${BASH_REMATCH[1]}"
+    fi
 
-            if [[ -n "$book" ]]; then
-                echo "$(date '+%Y-%m-%d %H:%M:%S') - Trigger detected: $book"
-                echo "$(date '+%Y-%m-%d %H:%M:%S') $book" >> "$TRIGGER_LOG"
-                send_discord_notification "📘 New audiobook imported: $book"
-                echo "$id_hash" >> "$SEEN_FILE"
-                echo "$(date '+%Y-%m-%d %H:%M:%S') - Notification sent for: $book"
-            fi
-        fi
+    # Wenn kein Treffer, nichts senden (verhindert Senden der ganzen JSON-Zeile)
+    [[ -z "$book" ]] && continue
+
+    id_hash=$(printf '%s' "$line" | md5sum | awk '{print $1}')
+    if ! grep -q "$id_hash" "$SEEN_FILE"; then
+        ts="$(date '+%Y-%m-%d %H:%M:%S')"
+        echo "$ts - Trigger detected: $book"
+        echo "$ts $book" >> "$TRIGGER_LOG"
+        send_discord_notification "📘 New audiobook imported: $book"
+        echo "$id_hash" >> "$SEEN_FILE"
+        echo "$ts - Notification sent for: $book"
     fi
 done
