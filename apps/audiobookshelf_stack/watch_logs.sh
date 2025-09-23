@@ -49,19 +49,19 @@ process_line() {
   # JSON -> message Feld extrahieren
   local msg
   msg=$(printf '%s' "$line" | jq -r '.message' 2>/dev/null || true)
+  echo "DEBUG MESSAGE: $msg"
   [[ -z "$msg" ]] && return 0
 
-  # Nur reagieren auf "Created new library item"
-  if [[ "$msg" == *"Created new library item"* ]]; then
+  # Regex-Match auf "Created new library item"
+  if [[ $msg =~ Created[[:space:]]new[[:space:]]library[[:space:]]item ]]; then
     echo "!!! MATCH FOUND in message: $msg"
 
     # Titel aus [Scan] "…"
     local book=""
     if [[ $msg =~ \[Scan\]\ \"([^\"]+)\" ]]; then
       book="${BASH_REMATCH[1]}"
-    fi
-
-    if [[ -z "$book" ]]; then
+      echo "BOOK EXTRACTED: $book"
+    else
       echo "MATCH but could not extract book title"
       return 0
     fi
