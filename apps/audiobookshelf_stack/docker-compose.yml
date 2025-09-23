@@ -23,9 +23,9 @@ services:
     restart: unless-stopped
 
   log-watcher:
-    build: . # zeigt auf Dockerfile
-    container_name: log-watcher
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
-      - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
-    restart: unless-stopped
+    - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
+    - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
