@@ -43,12 +43,12 @@ send_discord_notification() {
 process_line() {
   local line="$1"
 
-  # message-Feld extrahieren
+  # JSON -> message Feld
   local msg
   msg=$(printf '%s' "$line" | jq -r '.message' 2>/dev/null || true)
   [[ -z "$msg" ]] && return 0
 
-  # Nur reagieren wenn "Created new library item"
+  # Nur Zeilen mit Created new library item
   [[ "$msg" != *"Created new library item"* ]] && return 0
 
   # Titel aus [Scan] "…"
