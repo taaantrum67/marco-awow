@@ -13,8 +13,7 @@ services:
       - ${AUDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
-    entrypoint: ["/bin/sh", "-c", "/config/webhook_script/watch_logs.sh & exec /usr/local/bin/audiobookshelf-server"]
-
+    
     restart: unless-stopped
 
   apprise:
