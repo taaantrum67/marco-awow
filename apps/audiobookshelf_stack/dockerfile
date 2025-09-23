@@ -1,0 +1,16 @@
+FROM alpine:latest
+
+# Installiere Bash, curl, jq
+RUN apk add --no-cache bash curl jq python3 py3-pip
+
+# Arbeitsverzeichnis
+WORKDIR /app
+
+# Kopiere dein Skript
+COPY watch_logs.sh /app/watch_logs.sh
+
+# Skript ausführbar machen
+RUN chmod +x /app/watch_logs.sh
+
+# Standardkommando
+CMD ["/app/watch_logs.sh"]

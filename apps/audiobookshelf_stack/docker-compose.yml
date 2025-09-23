@@ -13,7 +13,6 @@ services:
       - ${AUDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
-    
     restart: unless-stopped
 
   apprise:
@@ -21,4 +20,12 @@ services:
     container_name: apprise
     ports:
       - "8888:8000"
+    restart: unless-stopped
+
+  log-watcher:
+    build: . # zeigt auf Dockerfile
+    container_name: log-watcher
+    volumes:
+      - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
+      - ${AUDIOBOOKSHELF_CONFIGFOLDER}/webhook_script:/config
     restart: unless-stopped
