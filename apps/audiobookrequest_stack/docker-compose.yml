@@ -63,6 +63,7 @@ services:
     volumes:
       - ${QBIT_CONFIG_DIR}:/config
       - ${QBIT_DOWNLOADS_DIR}:/downloads
+      - ${QBIT_DEFAULT_DL_DIR}:/default
       - ${QBIT_FINISHED_AUDIOBOOK_DL_DIR}:/audiobooks
       - ${QBIT_FINISHED_MOVIE_DL_DIR}:/movies
       - ${QBIT_FINISHED_TVSERIES_DL_DIR}:/tvseries
