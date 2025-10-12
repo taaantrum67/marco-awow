@@ -67,7 +67,7 @@ services:
       
     depends_on:
       gluetun:
-        condition: service_healthy
+        condition: service_started
     network_mode: "service:gluetun"                    # routes all traffic via gluetun
     restart: unless-stopped
 
