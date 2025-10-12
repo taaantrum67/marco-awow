@@ -18,7 +18,7 @@ services:
      
       - "${PROWLARR_PORT}:9696"                         # Prowlarr UI
 
-      - "${ABR_APP__EXTERNAL_PORT}:8001"                # AudiobookRequest UI via VPN
+      - "${ABR_APP_EXTERNAL_PORT}:8001"                # AudiobookRequest UI via VPN
 
       - "${FLARESOLVERR_EXTERNAL_PORT}:8191"            # FlareSolverr UI
 
@@ -131,7 +131,6 @@ services:
     environment:
       - LOG_LEVEL=debug
       - TZ=${TZ}
-      - PORT=5055
     volumes:
       - ${JELLYSEERR_CONFIG_DIR}:/app/config
     depends_on:
