@@ -26,9 +26,10 @@ services:
  
       - "${RADARR_PORT}:7878"                           # Radarr UI
 
+      - "${SONARR_PORT}:8989"                           # Sonarr UI
 
     volumes:
-      - ${GLUETUN_CONFIG_DIR}:/gluetun
+      - /appdata/docker/gluetun:/gluetun
     environment:
       # --- VPN PROVIDER SELECTION ---
       VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
@@ -66,14 +67,12 @@ services:
       WEBUI_PORT: 8080                                 # must stay 8080 inside container
       TORRENTING_PORT: ${QBIT_TORRENT_PORT}
     volumes:
-      - ${QBIT_CONFIG_DIR}:/config
-      - ${QBIT_DOWNLOADS_DIR}:/downloads
-      - ${QBIT_DEFAULT_DL_DIR}:/default
-      - ${QBIT_FINISHED_AUDIOBOOK_DL_DIR}:/audiobooks
-      - ${QBIT_FINISHED_MOVIE_DL_DIR}:/movies
-      - ${QBIT_FINISHED_TVSERIES_DL_DIR}:/tvseries
-
-      
+      - /appdata/docker/qbittorrent:/config
+      - /mnt/downloads:/downloads
+      - /mnt/downloads/unsorted:/default
+      - /mnt/audiobookshelf/data/auto-m4b/recentlyadded:/audiobooks
+      - /mnt/downloads/movies:/movies
+      - /mnt/downloads/tvseries:/tvseries
     depends_on:
       gluetun:
         condition: service_started
@@ -89,7 +88,7 @@ services:
       TZ: ${TZ}
       UMASK: ${UMASK:-002}
     volumes:
-      - ${PROWLARR_CONFIG_DIR}:/config
+      - /appdata/docker/prowlarr:/config
     depends_on:
       gluetun:
         condition: service_started
@@ -107,7 +106,7 @@ services:
       - PGID=${PGID}
       - UMASK=${UMASK}
     volumes:
-      - ${ABR_CONFIG_DIR}:/config
+      - /appdata/docker/audiobookrequest/config:/config
     depends_on:
       gluetun:
         condition: service_started
@@ -135,7 +134,7 @@ services:
       - LOG_LEVEL=debug
       - TZ=${TZ}
     volumes:
-      - ${JELLYSEERR_CONFIG_DIR}:/app/config
+      - /appdata/docker/jellyseer:/app/config
     depends_on:
       gluetun:
         condition: service_started
@@ -151,9 +150,25 @@ services:
       - TZ=${TZ}
       - UMASK=${UMASK:-002}
     volumes:
-      - ${RADARR_CONFIG_DIR}:/config
-      - ${QBIT_DOWNLOADS_DIR}:/downloads
-      - ${QBIT_FINISHED_MOVIE_DL_DIR}:/movies
+      - /appdata/docker/radarr:/config
+      - /mnt/movies:/movies
+    depends_on:
+      gluetun:
+        condition: service_started
+    network_mode: "service:gluetun"  # Through VPN
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK:-002}
+    volumes:
+      - /appdata/docker/sonarr:/config
+      - /mnt/tvseries:/tvshows
     depends_on:
       gluetun:
         condition: service_started
