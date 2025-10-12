@@ -68,11 +68,8 @@ services:
       TORRENTING_PORT: ${QBIT_TORRENT_PORT}
     volumes:
       - /appdata/docker/qbittorrent:/config
-      - /mnt/downloads:/downloads
-      - /mnt/downloads/unsorted:/default
+      - /mnt/torrents/:/torrents
       - /mnt/audiobookshelf/data/auto-m4b/recentlyadded:/audiobooks
-      - /mnt/downloads/movies:/movies
-      - /mnt/downloads/tvseries:/tvseries
     depends_on:
       gluetun:
         condition: service_started
@@ -152,6 +149,7 @@ services:
     volumes:
       - /appdata/docker/radarr:/config
       - /mnt/movies:/movies
+      - /mnt/torrents/movies:/movies_downloads
     depends_on:
       gluetun:
         condition: service_started
@@ -169,6 +167,7 @@ services:
     volumes:
       - /appdata/docker/sonarr:/config
       - /mnt/tvseries:/tvseries
+      - /mnt/torrents/tvseries:/tvseries_downloads
     depends_on:
       gluetun:
         condition: service_started
