@@ -168,7 +168,7 @@ services:
       - UMASK=${UMASK:-002}
     volumes:
       - /appdata/docker/sonarr:/config
-      - /mnt/tvseries:/tvshows
+      - /mnt/tvseries:/tvseries
     depends_on:
       gluetun:
         condition: service_started
