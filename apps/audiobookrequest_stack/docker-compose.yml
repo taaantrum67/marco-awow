@@ -83,7 +83,7 @@ services:
       - ${PROWLARR_CONFIG_DIR}:/config
     depends_on:
       gluetun:
-        condition: service_healthy
+        condition: service_started
     network_mode: "service:gluetun"                    # Prowlarr also goes through VPN
     restart: unless-stopped
 
@@ -101,7 +101,7 @@ services:
       - ${ABR_CONFIG_DIR}:/config
     depends_on:
       gluetun:
-        condition: service_healthy
+        condition: service_started
     network_mode: "service:gluetun"   # <— routes all traffic via VPN
     restart: unless-stopped
 
@@ -117,5 +117,5 @@ services:
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
-        condition: service_healthy
+        condition: service_started
 
