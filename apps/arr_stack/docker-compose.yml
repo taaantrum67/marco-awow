@@ -22,6 +22,8 @@ services:
 
       - "${FLARESOLVERR_EXTERNAL_PORT}:8191"            # FlareSolverr UI
 
+      - "${OVERSEERR_PORT}:5055"                        # Overseerr UI
+
     volumes:
       - ${GLUETUN_CONFIG_DIR}:/gluetun
     environment:
