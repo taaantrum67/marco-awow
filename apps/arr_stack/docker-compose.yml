@@ -18,11 +18,14 @@ services:
      
       - "${PROWLARR_PORT}:9696"                         # Prowlarr UI
 
-      - "${ABR_APP_EXTERNAL_PORT}:8001"                # AudiobookRequest UI via VPN
+      - "${ABR_APP_EXTERNAL_PORT}:8001"                 # AudiobookRequest UI via VPN
 
       - "${FLARESOLVERR_EXTERNAL_PORT}:8191"            # FlareSolverr UI
 
-      - "${JELLYSEERR_PORT}:5055"                        # Jellyseerr UI
+      - "${JELLYSEERR_PORT}:5055"                       # Jellyseerr UI
+ 
+      - "${RADARR_PORT}:7878"                           # Radarr UI
+
 
     volumes:
       - ${GLUETUN_CONFIG_DIR}:/gluetun
@@ -118,7 +121,7 @@ services:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=Europe/London
+      - TZ=${TZ}
     restart: unless-stopped
     network_mode: "service:gluetun"
     depends_on:
@@ -137,4 +140,22 @@ services:
       gluetun:
         condition: service_started
     network_mode: "service:gluetun"                    # routes through VPN
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - UMASK=${UMASK:-002}
+    volumes:
+      - ${RADARR_CONFIG_DIR}:/config
+      - ${QBIT_DOWNLOADS_DIR}:/downloads
+      - ${QBIT_FINISHED_MOVIE_DL_DIR}:/movies
+    depends_on:
+      gluetun:
+        condition: service_started
+    network_mode: "service:gluetun"  # Through VPN
     restart: unless-stopped
