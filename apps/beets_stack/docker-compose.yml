@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
     ports:
       - 5002:5002
-    # Diese Zeile ist neu. Sie startet das Web-Interface.
+    # Dies startet das Web-Interface Beets-Webimport.
     command: ["python3", "/config/webimport.py"]
 
   auto-m4b:
