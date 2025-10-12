@@ -125,18 +125,17 @@ services:
       gluetun:
         condition: service_started
 
-  overseerr:
-      image: lscr.io/linuxserver/overseerr:latest
-      container_name: overseerr
-      environment:
-        - PUID=${PUID}
-        - PGID=${PGID}
-        - TZ=${TZ}
-        - UMASK=${UMASK:-002}
-      volumes:
-        - ${OVERSEERR_CONFIG_DIR}:/config
-      depends_on:
-        gluetun:
-          condition: service_started
-      network_mode: "service:gluetun"                    # routes through VPN
-      restart: unless-stopped
+  jellyseerr:
+    image: fallenbagel/jellyseerr:latest
+    container_name: jellyseerr
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=${TZ}
+      - PORT=5055
+    volumes:
+      - ${JELLYSEERR_CONFIG_DIR}:/app/config
+    depends_on:
+      gluetun:
+        condition: service_started
+    network_mode: "service:gluetun"                    # routes through VPN
+    restart: unless-stopped
