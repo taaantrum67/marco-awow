@@ -149,8 +149,7 @@ services:
       - UMASK=${UMASK:-002}
     volumes:
       - /appdata/docker/radarr:/config
-      - /mnt/movies:/movies
-      - /mnt/torrents/movies:/movies_downloads
+      - /mnt:/media_mount
     depends_on:
       gluetun:
         condition: service_started
@@ -167,8 +166,7 @@ services:
       - UMASK=${UMASK:-002}
     volumes:
       - /appdata/docker/sonarr:/config
-      - /mnt/tvseries:/tvseries
-      - /mnt/torrents/tvseries:/tvseries_downloads
+      - /mnt:/media_mount
     depends_on:
       gluetun:
         condition: service_started
