@@ -69,7 +69,7 @@ services:
       TORRENTING_PORT: ${QBIT_TORRENT_PORT}
     volumes:
       - /appdata/docker/qbittorrent:/config
-      - /mnt/torrents/:/torrents
+      - /mnt/torrents/:/mnt/torrents
       - /mnt/audiobookshelf/data/auto-m4b/recentlyadded:/audiobooks
     depends_on:
       gluetun:
@@ -149,7 +149,7 @@ services:
       - UMASK=${UMASK:-002}
     volumes:
       - /appdata/docker/radarr:/config
-      - /mnt:/media_mount
+      - /mnt:/mnt
     depends_on:
       gluetun:
         condition: service_started
@@ -166,7 +166,7 @@ services:
       - UMASK=${UMASK:-002}
     volumes:
       - /appdata/docker/sonarr:/config
-      - /mnt:/media_mount
+      - /mnt:/mnt/
     depends_on:
       gluetun:
         condition: service_started
