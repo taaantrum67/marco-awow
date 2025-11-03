@@ -10,8 +10,8 @@ services:
       - JELLYFIN_PublishedServerUrl=http://192.168.0.20 #optional
     volumes:
       - /appdata/docker/jellyfin:/config
-      - /mnt/tvseries:/data/tvshows
-      - /mnt/movies:/data/movies
+      - /mnt/media/tvseries:/data/tvshows
+      - /mnt/media/movies:/data/movies
     ports:
       - 8096:8096
       - 8920:8920 #optional
