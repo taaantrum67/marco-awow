@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   gluetun:
-    image: qmcgaw/gluetun:v3.40.0 # Pinned to this version to avoid issues in v3.40+ specific to protonvpn
+    image: qdm12/gluetun:v3 # Pinned to this version 
     container_name: gluetun
     stdin_open: true
     tty: true
