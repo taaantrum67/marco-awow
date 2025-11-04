@@ -64,7 +64,6 @@ services:
       PGID: ${PGID}
       TZ: ${TZ}
       WEBUI_PORT: 8080                                 # must stay 8080 inside container
-      TORRENTING_PORT: ${QBIT_TORRENT_PORT}
     volumes:
       - /appdata/docker/qbittorrent:/config
       - /mnt/torrents/:/mnt/torrents
