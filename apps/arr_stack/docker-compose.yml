@@ -89,7 +89,7 @@ services:
       - /appdata/docker/prowlarr:/config
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     network_mode: "service:gluetun"                    # Prowlarr also goes through VPN
     restart: unless-stopped
 
@@ -107,7 +107,7 @@ services:
       - /appdata/docker/audiobookrequest/config:/config
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     network_mode: "service:gluetun"   # <— routes all traffic via VPN
     restart: unless-stopped
 
@@ -123,7 +123,7 @@ services:
     network_mode: "service:gluetun"
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
 
   jellyseerr:
     image: fallenbagel/jellyseerr:latest
@@ -135,7 +135,7 @@ services:
       - /appdata/docker/jellyseer:/app/config
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     network_mode: "service:gluetun"                    # routes through VPN
     restart: unless-stopped
 
@@ -152,7 +152,7 @@ services:
       - /mnt:/mnt
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     network_mode: "service:gluetun"  # Through VPN
     restart: unless-stopped
 
@@ -169,6 +169,6 @@ services:
       - /mnt:/mnt/
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     network_mode: "service:gluetun"  # Through VPN
     restart: unless-stopped
