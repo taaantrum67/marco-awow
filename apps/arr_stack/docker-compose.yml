@@ -73,7 +73,7 @@ services:
       - /mnt/audiobookshelf/data/auto-m4b/recentlyadded:/audiobooks
     depends_on:
       gluetun:
-        condition: service_started
+        condition: service_healthy
     network_mode: "service:gluetun"                    # routes all traffic via gluetun
     restart: unless-stopped
 
