@@ -12,6 +12,8 @@ services:
       - /appdata/docker/jellyfin:/config
       - /mnt/media/tvseries:/data/tvshows
       - /mnt/media/movies:/data/movies
+    devices:
+      - /dev/dri:/dev/dri
     ports:
       - 8096:8096
       - 8920:8920 #optional
