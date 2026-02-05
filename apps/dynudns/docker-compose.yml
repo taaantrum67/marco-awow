@@ -3,5 +3,4 @@ services:
   dynu-updater:
     image: longkeyy/dynu-updater:latest
     container_name: dynu-updater
-    env_file: .env
     restart: unless-stopped
