@@ -3,4 +3,8 @@ services:
   dynu-updater:
     image: longkeyy/dynu-updater:latest
     container_name: dynu-updater
+    environment:
+      - USERNAME=${USERNAME}
+      - HASHED_PASSWORD=${HASHED_PASSWORD}
+      - HOSTNAME={HOSTNAME}
     restart: unless-stopped
