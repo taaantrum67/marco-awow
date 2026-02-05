@@ -1,7 +1,7 @@
 version: '3'
 services:
   dynu-updater:
-    image: longkeyy/dynu-updater:latest
+    image: longkeyy/dynu-updater:1.1
     container_name: dynu-updater
     environment:
       - USERNAME=${USERNAME}
