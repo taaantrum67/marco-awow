@@ -7,7 +7,7 @@ services:
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
       - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
-      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE} # Set the timezone for n8n
     volumes:
       - n8n_data:/home/node/.n8n
       - ./local-files:/files
