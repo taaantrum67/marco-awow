@@ -39,12 +39,14 @@ services:
       - ${WEBSERVER_DATA}:/usr/src/paperless/data
       - ${WEBSERVER_MEDIA}:/usr/src/paperless/media
       - ${WEBSERVER_EXPORT}:/usr/src/paperless/export
-      - ${WEBSERVER_CONSUME}:/usr/src/paperless/consume
+      - ${WEBSERVER_CONSUME_MARCO}:/usr/src/paperless/consume/marco
+      - ${WEBSERVER_CONSUME_FATEMEH}:/usr/src/paperless/consume/fatemeh
     environment:
       PAPERLESS_CONSUMER_POLLING: "30"
       PAPERLESS_CONSUMER_POLLING_RETRY_COUNT: "10"
       PAPERLESS_CONSUMER_POLLING_DELAY: "10"
       PAPERLESS_CONSUMER_INOTIFY_DELAY: "5"
+      PAPERLESS_CONSUMER_RECURSIVE: "true"
       PAPERLESS_REDIS: "redis://broker:6379"
       PAPERLESS_DBHOST: "db"
       PAPERLESS_TIKA_ENABLED: "1"
