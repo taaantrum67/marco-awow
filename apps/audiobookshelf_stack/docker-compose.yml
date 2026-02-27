@@ -14,18 +14,3 @@ services:
       - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
       - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
     restart: unless-stopped
-
-  apprise:
-    image: lscr.io/linuxserver/apprise-api:latest
-    container_name: apprise
-    ports:
-      - "8888:8000"
-    restart: unless-stopped
-
-  log-watcher:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-    - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
-    - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
