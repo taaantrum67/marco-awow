@@ -9,8 +9,8 @@ services:
     ports:
       - "${AUDIOBOOKSHELF_HOST_PORT}:80"
     volumes:
-      - ${AUDIOBOOKSHELF_AUDIOBOOKFOLDER}:/audiobooks
-      - ${AUDIOBOOKSHELF_PODCASTFOLDER}:/podcasts
-      - ${AUDIOBOOKSHELF_CONFIGFOLDER}:/config
-      - ${AUDIOBOOKSHELF_METADATAFOLDER}:/metadata
+      - /mnt/media/audiobooks:/audiobooks
+      - /mnt/media/podcasts:/podcasts
+      - /appdata/docker/audiobookshelf/config:/config
+      - /appdata/docker/audiobookshelf/metadata:/metadata
     restart: unless-stopped
