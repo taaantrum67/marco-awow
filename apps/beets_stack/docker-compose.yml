@@ -13,9 +13,8 @@ services:
       - INSTALL_PIP_PACKAGES=beets-audible beets-copyartifacts3 flask
     volumes:
       - /appdata/docker/beets/config:/config
-      # Dein custom-cont-init.d Volume ist hier nicht mehr nötig, wenn du es nur für das Skript hattest
-      - /mnt/audiobookshelf/data/audiobooks:/audiobooks
-      - /mnt/audiobookshelf/data/auto-m4b/untagged:/input
+      - /mnt/media/audiobooks:/audiobooks
+      - /mnt/media/auto-m4b/untagged:/input
     restart: unless-stopped
     ports:
       - 5002:5002
@@ -26,12 +25,12 @@ services:
     image: seanap/auto-m4b
     container_name: auto-m4b
     volumes:
-      - /mnt/audiobookshelf/data/auto-m4b/recentlyadded:/temp/recentlyadded
-      - /mnt/audiobookshelf/data/auto-m4b/untagged:/temp/untagged
-      - /mnt/audiobookshelf/data/auto-m4b/backup:/temp/backup
-      - /mnt/audiobookshelf/data/auto-m4b/delete:/temp/delete
-      - /mnt/audiobookshelf/data/auto-m4b/merge:/temp/merge
-      - /mnt/audiobookshelf/data/auto-m4b/fix:/temp/fix
+      - /mnt/auto-m4b/recentlyadded:/temp/recentlyadded
+      - /mnt/auto-m4b/untagged:/temp/untagged
+      - /mnt/auto-m4b/backup:/temp/backup
+      - /mnt/auto-m4b/delete:/temp/delete
+      - /mnt/auto-m4b/merge:/temp/merge
+      - /mnt/auto-m4b/fix:/temp/fix
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
