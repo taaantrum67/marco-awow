@@ -14,7 +14,7 @@ services:
     volumes:
       - /appdata/docker/beets/config:/config
       - /mnt/media/audiobooks:/audiobooks
-      - /mnt/media/auto-m4b/untagged:/input
+      - /mnt/auto-m4b/untagged:/input
     restart: unless-stopped
     ports:
       - 5002:5002
