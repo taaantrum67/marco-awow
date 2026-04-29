@@ -20,6 +20,14 @@ services:
       - RAG_PORT=${RAG_PORT:-8000}
       - RAG_API_URL=http://rag_api:${RAG_PORT:-8000}
       - CONFIG_PATH=/app/librechat.yaml
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+      - CREDS_KEY=${CREDS_KEY}
+      - CREDS_IV=${CREDS_IV}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GOOGLE_KEY=${GOOGLE_KEY}
+      - ASSISTANTS_API_KEY=${ASSISTANTS_API_KEY}
     volumes:
       - ./librechat.yaml:/app/librechat.yaml
       - /appdata/docker/librechat/LibreChat/images:/app/client/public/images
