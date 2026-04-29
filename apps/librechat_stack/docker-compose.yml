@@ -29,7 +29,7 @@ services:
       - GOOGLE_KEY=${GOOGLE_KEY}
       - ASSISTANTS_API_KEY=${ASSISTANTS_API_KEY}
     volumes:
-      - ./librechat.yaml:/app/librechat.yaml
+      - /appdata/docker/librechat/LibreChat/librechat.yaml:/app/librechat.yaml
       - /appdata/docker/librechat/LibreChat/images:/app/client/public/images
       - /appdata/docker/librechat/LibreChat/uploads:/app/uploads
       - /appdata/docker/librechat/LibreChat/logs:/app/api/logs
