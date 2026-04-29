@@ -28,6 +28,8 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GOOGLE_KEY=${GOOGLE_KEY}
       - ASSISTANTS_API_KEY=${ASSISTANTS_API_KEY}
+      - ALLOW_REGISTRATION=true
+      - ALLOW_EMAIL_LOGIN=true
     volumes:
       - /appdata/docker/librechat/LibreChat/librechat.yaml:/app/librechat.yaml
       - /appdata/docker/librechat/LibreChat/images:/app/client/public/images
